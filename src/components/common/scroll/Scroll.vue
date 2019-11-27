@@ -25,6 +25,7 @@ export default {
       type:Boolean,
       default:false
     }
+    
   },
   mounted(){
     // 1.创建BScroll对象
@@ -39,17 +40,23 @@ export default {
       this.$emit('scroll',position)
     })
 
-    // 3.监听上拉事件
-    this.scroll.on('pullingUp',()=>{
+    // 3.监听上拉事件,滚动到底部
+    if(this.pullUpLoad){
+      this.scroll.on('pullingUp',()=>{
       this.$emit('pullingUp')
     })
+    }
+  
   },
   methods:{
     scrollTo(x,y,time){
-      this.scroll.scrollTo(x,y,time)
+      this.scroll && this.scroll.scrollTo(x,y,time)
     },
     finishPullUp(){
       this.scroll.finishPullUp()
+    },
+    refresh(){
+      this.scroll && this.scroll.refresh()
     }
   }
 };
